@@ -647,7 +647,12 @@ class Map(object):
             #Create legend
             name = legend_name or columns[1]
             leg_templ = self.env.get_template('d3_map_legend.js')
-            legend = leg_templ.render({'lin_max': int(domain[-1]*1.1),
+
+            lin_min = domain[0] - abs(domain[0]*0.1)
+            lin_max = domain[-1] + abs(domain[-1]*0.1)
+
+            legend = leg_templ.render({'lin_min': lin_min,
+                                       'lin_max': lin_max,
                                        'tick_labels': tick_labels,
                                        'caption': name})
             self.template_vars.setdefault('map_legends', []).append(legend)
