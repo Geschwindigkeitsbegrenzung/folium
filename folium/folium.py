@@ -627,7 +627,11 @@ class Map(object):
             self.template_vars.setdefault('func_vars', []).append(data_var)
 
             #D3 Color scale
-            series = data[columns[1]]
+            if isinstance(data, pd.DataFrame):
+                series = data[columns[1]]
+            else:
+                series = data
+
             domain = threshold_scale or utilities.split_six(series=series)
             if len(domain) > 253:
                 raise ValueError('The threshold scale must be of length <= 253')
